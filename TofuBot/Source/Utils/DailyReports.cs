@@ -123,6 +123,14 @@ namespace TofuBot.Utils
             string Json = JsonConvert.SerializeObject(Report, Formatting.Indented);
             File.WriteAllText("DailyReports/tempReport.json", Json);
         }
+
+		// This is extremely redundant due to Backup() existing but I don't want to deal with trying to pass in event arguments that don't exist
+		// ...for external use (outside of this class, not program :P)
+		public static void CreateBackup()
+		{
+			string Json = JsonConvert.SerializeObject(Report, Formatting.Indented);
+            File.WriteAllText("DailyReports/tempReport.json", Json);
+		}
     }
 
     public class DailyReport
