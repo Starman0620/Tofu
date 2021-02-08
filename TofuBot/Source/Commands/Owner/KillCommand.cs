@@ -17,6 +17,7 @@ namespace TofuBot.Commands
 			if(Context.Message.Author.Id != Bot.config.OwnerID) return;
 			await ReplyAsync("Shutting down...");
             DailyReportSystem.CreateBackup();
+			Log.Write("Shutdown triggered by command.");
 			Environment.Exit(0);
         }
     }
