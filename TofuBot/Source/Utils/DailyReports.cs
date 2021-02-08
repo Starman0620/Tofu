@@ -72,7 +72,7 @@ namespace TofuBot.Utils
         private async static void SendReport(bool IsDaily)
         {
             SocketGuild Guild = Bot.client.Guilds.FirstOrDefault();
-            SocketTextChannel LogChannel = (SocketTextChannel)Guild.GetChannel(Globals.BotLog);
+            SocketTextChannel LogChannel = (SocketTextChannel)Guild.GetChannel(Bot.config.LogChannel);
 
             try
             {

@@ -114,6 +114,8 @@ namespace TofuBot
         public string Token { get; set; }
         public string Prefix { get; set; }
         public string Status { get; set; }
+		public ulong OwnerID { get; set; }
+		public ulong LogChannel { get; set; } = 1;
         public string CatAPIKey { get; set; } // Not used currently in tofu, left in just in case
         public string WikiHowAPIKey { get; set; } // rapidapi.com WikiHow; not used in tofu. Likely never will be
         public string WeatherAPIKey { get; set; }

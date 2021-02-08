@@ -19,7 +19,7 @@ namespace TofuBot.Commands
         public async Task Eval([Remainder] string code)
         {
             SocketGuildUser author = Context.Message.Author as SocketGuildUser;
-            if(author.Id != Globals.StarID && !author.GuildPermissions.KickMembers) {
+            if(author.Id != Bot.config.OwnerID && !author.GuildPermissions.KickMembers) {
                 await Context.Message.DeleteAsync();
                 return;
             }
