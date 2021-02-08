@@ -105,7 +105,7 @@ namespace TofuBot
                     if (!result.ErrorReason.ToLower().Contains("unknown command"))
                     {
                         Log.Write(result.ErrorReason);
-                        await message.Channel.SendMessageAsync($"⚠️ Error: {result.ErrorReason} ⚠️\nConsult Starman or the help page for the command you executed. (~help [command])");
+                        await message.Channel.SendMessageAsync($"⚠️ Error: {result.ErrorReason} ⚠️\nConsult Starman or the help page for the command you executed. (.help [command])");
                     }
             }
         }
