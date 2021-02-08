@@ -25,7 +25,6 @@ namespace TofuBot
         public static IServiceProvider services;
         public static BotConfig config;
         public static DateTime startTime = DateTime.Now;
-
         public static List<ulong> blacklistedUsers = new List<ulong>();
 
         public async Task RunBot()
@@ -68,6 +67,9 @@ namespace TofuBot
                 return Task.CompletedTask;
             };
             client.MessageReceived += HandleCommandAsync;
+			client.UserJoined += async (SocketGuildUser user) => {
+				await ((SocketTextChannel)user.Guild.GetChannel(config.WelcomeChannel)).SendMessageAsync($"Welcome, {user.Mention} to Cerro Gordo! Be sure to read the <#774567486069800960> before chatting!");
+			};
             await commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
 
 
@@ -115,6 +117,7 @@ namespace TofuBot
         public string Prefix { get; set; }
         public string Status { get; set; }
 		public ulong OwnerID { get; set; }
+		public ulong WelcomeChannel { get; set; }
 		public ulong LogChannel { get; set; } = 1;
         public string CatAPIKey { get; set; } // Not used currently in tofu, left in just in case
         public string WikiHowAPIKey { get; set; } // rapidapi.com WikiHow; not used in tofu. Likely never will be
