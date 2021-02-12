@@ -63,7 +63,7 @@ namespace TofuBot.Commands
             plt.Title("H  a  p  p  y    h  e  a  l  t  h  y    s  e  r  v  e  r", null, null, 45.5f, null, true);
             plt.Legend(true, null, 30, null, null, null, null, legendLocation.lowerRight, shadowDirection.lowerRight, null, null);
 
-            // Save
+            // Save and send
             plt.SaveFig("stats.png");
 			await Context.Channel.SendFileAsync("stats.png");
 		}

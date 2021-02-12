@@ -6,5 +6,6 @@ namespace TofuBot.Commands
         public const int Main = 0;
         public const int Staff = 1;
 		public const int Owner = 2;
+		public const int Fun = 3;
     }
 }

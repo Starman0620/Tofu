@@ -24,7 +24,7 @@ namespace TofuBot.Commands
 
                 // Embed content
                 HelpEmbed.AddField("**Main**", GetCommands(Category.Main), false);
-                //HelpEmbed.AddField("**Fun**", GetCommands(Category.Fun), false);
+                HelpEmbed.AddField("**Fun**", GetCommands(Category.Fun), false);
                 HelpEmbed.AddField("**Staff**", GetCommands(Category.Staff), false);
 				HelpEmbed.AddField("**Owner**", GetCommands(Category.Owner), true);
 
