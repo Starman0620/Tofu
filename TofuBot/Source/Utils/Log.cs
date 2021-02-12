@@ -14,9 +14,12 @@ namespace TofuBot.Utils
             string message =$"[{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}] {text}";
 
 			// Print, send and write the log
-            if(print) Console.WriteLine(message);
+            if(print) 
+			{
+				Console.WriteLine(message);
+				((SocketTextChannel)Bot.client.GetChannel(Bot.config.LogChannel)).SendMessageAsync(message);
+			}
             File.AppendAllText($"Logs/{DateTime.Now.ToShortDateString().Replace("\\", "-").Replace("/", "-")}.log", message+'\n'); // Replaces here are for Windows and other date formats
-			((SocketTextChannel)Bot.client.GetChannel(Bot.config.LogChannel)).SendMessageAsync(message);
         }
     }
 }

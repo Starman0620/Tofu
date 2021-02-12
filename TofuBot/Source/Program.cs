@@ -101,7 +101,7 @@ namespace TofuBot
 
                 SocketCommandContext context = new SocketCommandContext(client, message); // Create context for the command, this is things like channel, guild, etc
                 var result = await commands.ExecuteAsync(context, argumentPos, services); // Execute the command with the above context
-				Log.Write($"{arg.Author} executed command: {arg.Content}");
+				Log.Write($"{arg.Author} executed command: {arg.Content}", false);
 
                 // Command error handling
                 if (!result.IsSuccess)
