@@ -68,7 +68,6 @@ namespace TofuBot.Commands
         {
             string textNum = message.FirstOrDefault(x => x == '1' || x == '2' || x == '3' || x == '4').ToString();
             int.TryParse(textNum, out int val);
-            Log.Write("Input text was " + message + " and outputted number was " + val);
             return val-1;
         }
 
