@@ -26,7 +26,6 @@ namespace TofuBot
         public static IServiceProvider services;
         public static BotConfig config;
         public static DateTime startTime = DateTime.Now;
-        public static List<ulong> blacklistedUsers = new List<ulong>();
 
         public async Task RunBot()
         {
@@ -34,9 +33,6 @@ namespace TofuBot
             if (!Directory.Exists("../WorkingDir")) Directory.CreateDirectory("../WorkingDir");
             Directory.SetCurrentDirectory("../WorkingDir");
 #endif
-
-            if (!Directory.Exists("Logs"))
-                Directory.CreateDirectory("Logs");
 
             services = new ServiceCollection()
                 .AddSingleton(client)
@@ -95,10 +91,6 @@ namespace TofuBot
 
             if (message.HasStringPrefix(config.Prefix, ref argumentPos) || message.HasMentionPrefix(client.CurrentUser, ref argumentPos))
             { 
-                // If the message has the bots prefix or a mention of the bot, it is a command.
-                if (blacklistedUsers.Contains(arg.Author.Id))
-                    return;
-
                 SocketCommandContext context = new SocketCommandContext(client, message); // Create context for the command, this is things like channel, guild, etc
                 var result = await commands.ExecuteAsync(context, argumentPos, services); // Execute the command with the above context
 				Log.Write($"{arg.Author} executed command: {arg.Content}", false);
