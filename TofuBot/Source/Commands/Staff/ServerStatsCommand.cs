@@ -61,7 +61,7 @@ namespace TofuBot.Commands
             plt.TightenLayout(0, true);
             plt.XTicks(xticks);
             plt.Title("H  a  p  p  y    h  e  a  l  t  h  y    s  e  r  v  e  r", null, null, 45.5f, null, true);
-            plt.Legend(true, null, 30, null, null, null, null, legendLocation.upperRight, shadowDirection.lowerRight, null, null);
+            plt.Legend(true, null, 30, null, null, System.Drawing.Color.FromArgb(100, 52, 54, 60), null, legendLocation.upperRight, shadowDirection.lowerRight, null, null);
 
             // Save and send
             plt.SaveFig("stats.png");
