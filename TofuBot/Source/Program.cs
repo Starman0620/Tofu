@@ -65,7 +65,6 @@ namespace TofuBot
             };
             client.MessageReceived += HandleCommandAsync;
 			client.UserJoined += async (SocketGuildUser user) => {
-				await ((SocketTextChannel)client.GetChannel(config.LogChannel)).SendMessageAsync("Someone joined or something, I dunno :P");
 				await ((SocketTextChannel)client.GetChannel(config.WelcomeChannel)).SendMessageAsync($"Welcome, {user.Mention} to Cerro Gordo! Be sure to read the <#774567486069800960> before chatting!");
 			};
             await commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
