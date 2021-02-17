@@ -31,7 +31,7 @@ namespace TofuBot.Commands.Main
             if((bool)serverInfo.online) {
                 eb.WithThumbnailUrl(Context.Guild.IconUrl);
                 eb.WithTitle((string)serverInfo.motd.clean[0]);
-                //eb.AddField("IP", "mc.winworldpc.com:48666", true);
+                eb.AddField("IP", "cerrogordo.thisproject.space", true);
                 eb.AddField("Version", "1.16.5", true);
                 eb.AddField("Online?", ((bool)serverInfo.online) ? "Yes" : "No", true);
                 eb.AddField("User Count", $"{(int)serverInfo.players.online}/{(int)serverInfo.players.max}", true);
