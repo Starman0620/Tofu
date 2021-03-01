@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,7 +21,7 @@ namespace TofuBot.Commands
 		[Command("serverstats")]
 		[Priority(Category.Staff)]
 		[Summary("Show basic statistics about the server|")]
-		public async Task ServerStats()
+		public async Task ServerStats([Remainder]string args = null)
 		{
 			// Report loading
             List<DailyReport> reports = new List<DailyReport>();
@@ -64,8 +65,27 @@ namespace TofuBot.Commands
             plt.Legend(true, null, 30, null, null, System.Drawing.Color.FromArgb(100, 52, 54, 60), null, legendLocation.upperRight, shadowDirection.lowerRight, null, null);
 
             // Save and send
-            plt.SaveFig("stats.png");
+			plt.SaveFig("stats.png");
+			if(args != null) {
+				await Context.Channel.SendFileAsync("stats.png");
+			}
+
+			// Draw it onto C H A D
+			Bitmap chad = new Bitmap(Bitmap.FromFile("chad.png"));
+			Bitmap stats = new Bitmap(Bitmap.FromFile("stats.png"));
+			using(Graphics canvas = Graphics.FromImage(chad)) {
+				canvas.DrawImage(stats, graphPos);
+				canvas.Save();
+			}
+
+			chad.Save("stats.png");
 			await Context.Channel.SendFileAsync("stats.png");
 		}
+
+		static Point[] graphPos = new Point[] {
+			new Point(900, 500),  // Top left
+			new Point(1440, 385), // Top right
+			new Point(985, 890),  // Bottom left
+		};
 	}
 }
