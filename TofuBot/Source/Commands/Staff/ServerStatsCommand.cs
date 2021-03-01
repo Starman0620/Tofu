@@ -68,6 +68,7 @@ namespace TofuBot.Commands
 			plt.SaveFig("stats.png");
 			if(args != null) {
 				await Context.Channel.SendFileAsync("stats.png");
+				return;
 			}
 
 			// Draw it onto C H A D
