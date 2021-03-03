@@ -23,8 +23,8 @@ namespace TofuBot.Commands
             eb.WithTitle("Tofu");
             eb.WithThumbnailUrl(Bot.client.CurrentUser.GetAvatarUrl());
             eb.AddField("Language", "C#", true);
-            eb.AddField("Library", "Discord.NET", true);
-            eb.AddField("Author", "Starman#8456", true);
+            eb.AddField("Library", "Discord.NET 2.3.0", true);
+            eb.AddField("Author", "Starman0620#8456", true);
             eb.AddField("Member Count", Context.Guild.MemberCount, true);
             eb.AddField("Uptime", uptime.Humanize(3), true);
 

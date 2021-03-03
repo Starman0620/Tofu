@@ -4,80 +4,73 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 
-namespace TofuBot.Commands
+namespace TofuBot.Commands.Main
 {
-    public class HelpCommand : ModuleBase<SocketCommandContext>
-    {
-        [Command("help")]
-        [Summary("Shows a list of commands or info about a specific command.|[Command]")]
-        [Priority(Category.Main)]
-        public async Task Help([Remainder]string command = null)
-        {
-            if(command == null)
-            {
-                EmbedBuilder HelpEmbed = new EmbedBuilder();
+	public class HelpCommand : ModuleBase<SocketCommandContext>
+	{
+		[Command("help")]
+		[Summary("Get a list of bot commands and their usage|[Command]")]
+		[Priority(Category.Main)]
+		public async Task Help([Remainder] string command = null)
+		{
+			EmbedBuilder helpEmbed = new EmbedBuilder();
+			helpEmbed.WithColor(Bot.config.embedColour);
+			helpEmbed.WithFooter("Type \".help [command]\" to get more info on a command");
 
-                // Embed setup
-                HelpEmbed.WithTitle("Tofu Commands");
-                HelpEmbed.WithFooter("Type \".help [Command]\" to get more info on a command.");
-                HelpEmbed.WithColor(Bot.config.embedColour);
-
-                // Embed content
-                HelpEmbed.AddField("**Main**", GetCommands(Category.Main), false);
-                HelpEmbed.AddField("**Fun**", GetCommands(Category.Fun), false);
-                HelpEmbed.AddField("**Staff**", GetCommands(Category.Staff), false);
-				HelpEmbed.AddField("**Owner**", GetCommands(Category.Owner), true);
-
-                await ReplyAsync("", false, HelpEmbed.Build());
-            }
-            else // If we're getting info on a specific command rather than listing commands
-            {
-                string usage = GetCommandUsage(command);
-                if(usage != null)
-                {
-                    string UpperCommandName = command[0].ToString().ToUpper() + command.Remove(0, 1);
-
-                    var eb = new EmbedBuilder();
-                    eb.WithTitle($"{UpperCommandName} Command");
-                    eb.WithColor(Bot.config.embedColour);
-                    eb.WithDescription($"{usage}");
-                    await ReplyAsync("", false, eb.Build());
-                }
+			if (command == null)
+			{
+				helpEmbed.WithTitle("Tofu Commands");
+				helpEmbed.AddField("**Main**", GetCommands(Category.Main), false);
+				helpEmbed.AddField("**Fun**", GetCommands(Category.Fun), false);
+				helpEmbed.AddField("**Staff**", GetCommands(Category.Staff), false);
+				helpEmbed.AddField("**Owner**", GetCommands(Category.Owner), false);
+			}
+			else
+			{
+				string usage = GetCommandUsage(command);
+				if(usage != null)
+				{
+					string upperCommandName = command[0].ToString().ToUpper() + command.Remove(0, 1);
+					helpEmbed.WithTitle($"{upperCommandName} Command");
+					helpEmbed.WithDescription($"{usage}");
+				}
 				else
-					await ReplyAsync("That command does not seem to exist.");
-            }
-        }
+				{
+					await ReplyAsync("That command doesn't seem to exist.");
+					return;
+				}
+			}
 
+			await ReplyAsync("", false, helpEmbed.Build());
+		}
 
-        /// <summary>
-        /// Gets every command in a category in string form, so it can be put right into an embed.
-        /// </summary>
-        public static string GetCommands(int Priority)
-        {
-            string FinalString = "";
-            for(int i = 0; i < Bot.commands.Commands.Count() / 2; i++) {
-                CommandInfo Command = Bot.commands.Commands.ToArray()[i];
-                if(Command.Summary != null && Command.Priority == Priority)
-                {
-                    if(!string.IsNullOrWhiteSpace(FinalString)) FinalString += $" | {Command.Name}";
-                    else FinalString = $"{Command.Name}";
-                }
-            }
-            return FinalString;
-        }
+		static string GetCommands(int category)
+		{
+			string finalString = "";
+			// Loop over every command
+			for (int i = 0; i < Bot.commands.Commands.Count(); i++)
+			{
+				CommandInfo command = Bot.commands.Commands.ToArray()[i];
+				// If the command is in the category we're looking for
+				if (command.Priority == category)
+				{
+					if (!string.IsNullOrWhiteSpace(finalString)) finalString += $" | `{command.Name}`";
+					else finalString = $"`{command.Name}`";
+				}
+			}
 
-        /// <summary>
-        /// Gets the usage of a command
-        /// </summary>
-        public static string GetCommandUsage(string CommandName)
-        {
-            CommandInfo Info = Bot.commands.Commands.FirstOrDefault(x => x.Name.ToLower() == CommandName.ToLower());
-            if (Info.Summary.Contains("|"))
-            {
-                string description = $"{Info.Summary.Split('|')[0]}\n\n**Usage:** ~{CommandName} {Info.Summary.Split('|')[1]}";
-                return description;
-            }
-            else return null;
-        }
-    }
+			return finalString;
+		}
+
+		public static string GetCommandUsage(string commandName)
+		{
+			CommandInfo command = Bot.commands.Commands.FirstOrDefault(x => x.Name.ToLower() == commandName.ToLower());
+			if (command != null && command.Summary.Contains("|"))
+			{
+				string desc = $"{command.Summary.Split('|')[0]}\n\n**Usage:** .{commandName} {command.Summary.Split('|')[1]}";
+				return desc;
+			}
+			return null;
+		}
+	}
 }

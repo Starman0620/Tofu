@@ -25,7 +25,7 @@ namespace TofuBot.Commands.Main
 
             // Format the info in an embed
             EmbedBuilder eb = new EmbedBuilder();
-            eb.WithColor(Color.Gold);
+            eb.WithColor(Bot.config.embedColour);
             
 			// Set up the embed
             if((bool)serverInfo.online) {

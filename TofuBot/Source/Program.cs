@@ -67,7 +67,6 @@ namespace TofuBot
 			client.UserJoined += async (SocketGuildUser user) => {
 				await ((SocketTextChannel)client.GetChannel(config.WelcomeChannel)).SendMessageAsync($"Welcome, {user.Mention} to Cerro Gordo! Be sure to read the <#774567486069800960> before chatting!");
 			};
-            await commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
 
 
             // Start the bot
@@ -95,12 +94,26 @@ namespace TofuBot
 				Log.Write($"{arg.Author} executed command: {arg.Content}", false);
 
                 // Command error handling
-                if (!result.IsSuccess)
-                    if (!result.ErrorReason.ToLower().Contains("unknown command"))
-                    {
-                        Log.Write(result.ErrorReason);
-                        await message.Channel.SendMessageAsync($"⚠️ Error: {result.ErrorReason} ⚠️\nConsult Starman or the help page for the command you executed. (.help [command])");
-                    }
+                if (!result.IsSuccess && !result.ErrorReason.ToLower().Contains("unknown command"))
+				{
+					Log.Write(result.ErrorReason);
+
+					// Get command usage
+					string command = arg.Content.ToLower().Split(" ")[0].Replace(config.Prefix, "");
+					string usage = TofuBot.Commands.Main.HelpCommand.GetCommandUsage(command);
+
+					// Send a help embed
+					EmbedBuilder helpEmbed = new EmbedBuilder();
+					helpEmbed.WithColor(config.embedColour);
+					string upperCommandName = command[0].ToString().ToUpper() + command.Remove(0, 1);
+					helpEmbed.WithTitle($"{upperCommandName} Command");
+					helpEmbed.WithDescription($"{usage}");
+					await message.Channel.SendMessageAsync("There was an error executing your command! Are you sure you've used it correctly?", false, helpEmbed.Build());
+
+					//await message.Channel.SendMessageAsync($"⚠️ Error: {result.ErrorReason} ⚠️\nConsult Starman or the help page for the command you executed. (.help [command])");
+				}
+				else if (result.IsSuccess)
+					Log.Write($"{arg.Author} executed command: {arg.Content}", false);
             }
         }
 	}
