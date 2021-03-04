@@ -47,13 +47,13 @@ namespace TofuBot.Commands
             double[] ys = new double[reports.Count];
             for(int i = 0; i < reports.Count; i++) {
                 ys[i] = i;
-                xticks[i] = reports[i].DayOfReport.ToShortDateString();
+                xticks[i] = (i+1).ToString();
             }
             
             // Plotting
             Plot plt = new Plot(1920, 1080);
             plt.Style(System.Drawing.Color.FromArgb(52, 54, 60), System.Drawing.Color.FromArgb(52, 54, 60), null, System.Drawing.Color.White, System.Drawing.Color.White, System.Drawing.Color.White);
-            plt.XLabel("D a y", null, null, null, 25.5f, false);
+            plt.XLabel("D a y s  S i n c e  C r e a t i o n", null, null, null, 25.5f, false);
             plt.YLabel("G o o d  D a t a", null, null, 25.5f, null, false);
             plt.PlotFillAboveBelow(ys, messages, "Messages", lineWidth: 4, lineColor: System.Drawing.Color.FromArgb(100, 119, 183), fillAlpha: .5, fillColorBelow: System.Drawing.Color.FromArgb(100, 119, 183), fillColorAbove: System.Drawing.Color.FromArgb(100, 119, 183));
             plt.PlotFillAboveBelow(ys, commands, "Command Executions", lineWidth: 4, lineColor: System.Drawing.Color.FromArgb(252, 186, 3), fillAlpha: .5, fillColorBelow: System.Drawing.Color.FromArgb(252, 186, 3), fillColorAbove: System.Drawing.Color.FromArgb(252, 186, 3));
