@@ -44,14 +44,14 @@ namespace TofuBot.Commands
                 userLeave = new double[15];
                 xticks = new string[15];
                 ys = new double[15];
-                for (int i = reports.Count - 1; i > reports.Count - 15; i--)
+                for (int i = 0; i < 15; i++)
                 {
                     ys[i] = i;
-                    xticks[i] = reports[i].DayOfReport.ToShortDateString();
-                    messages[i] += reports[i].MessagesSent;
-                    commands[i] += reports[i].CommandsRan;
-                    userJoin[i] += reports[i].UsersJoined;
-                    userLeave[i] += reports[i].UsersLeft;
+                    xticks[i] = reports[(reports.Count-15)+i].DayOfReport.ToShortDateString();
+                    messages[i] += reports[(reports.Count-15)+i].MessagesSent;
+                    commands[i] += reports[(reports.Count-15)+i].CommandsRan;
+                    userJoin[i] += reports[(reports.Count-15)+i].UsersJoined;
+                    userLeave[i] += reports[(reports.Count-15)+i].UsersLeft;
                 }
             }
             else
