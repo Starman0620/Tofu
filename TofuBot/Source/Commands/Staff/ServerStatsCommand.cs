@@ -32,35 +32,42 @@ namespace TofuBot.Commands
             }
             reports = reports.OrderByDescending(grp => grp.DayOfReport.DayOfYear).Reverse().ToList();
 
-            // Data parsing
-            double[] messages = new double[reports.Count];
-            double[] commands = new double[reports.Count];
-            double[] userJoin = new double[reports.Count];
-            double[] userLeave = new double[reports.Count];
-            string[] xticks = new string[reports.Count];
-            for (int i = 0; i < reports.Count; i++)
-            {
-                messages[i] += reports[i].MessagesSent;
-                commands[i] += reports[i].CommandsRan;
-                userJoin[i] += reports[i].UsersJoined;
-                userLeave[i] += reports[i].UsersLeft;
-            }
 
-            double[] ys = new double[reports.Count];
+            // This is a complete mess but oh well, I'm lazy and it works.
             if (reports.Count > 15)
             {
+                double[] messages = new double[15];
+                double[] commands = new double[15];
+                double[] userJoin = new double[15];
+                double[] userLeave = new double[15];
+                string[] xticks = new string[15];
+                double[] ys = new double[15];
                 for (int i = reports.Count - 1; i > reports.Count - 15; i--)
                 {
                     ys[i] = i;
                     xticks[i] = reports[i].DayOfReport.ToShortDateString();
+                    messages[i] += reports[i].MessagesSent;
+                    commands[i] += reports[i].CommandsRan;
+                    userJoin[i] += reports[i].UsersJoined;
+                    userLeave[i] += reports[i].UsersLeft;
                 }
             }
             else
             {
-                for(int i = 0; i < reports.Count; i++)
+                double[] messages = new double[reports.Count];
+                double[] commands = new double[reports.Count];
+                double[] userJoin = new double[reports.Count];
+                double[] userLeave = new double[reports.Count];
+                string[] xticks = new string[reports.Count];
+                double[] ys = new double[reports.Count];
+                for (int i = 0; i < reports.Count; i++)
                 {
                     ys[i] = i;
                     xticks[i] = reports[i].DayOfReport.ToShortDateString();
+                    messages[i] += reports[i].MessagesSent;
+                    commands[i] += reports[i].CommandsRan;
+                    userJoin[i] += reports[i].UsersJoined;
+                    userLeave[i] += reports[i].UsersLeft;
                 }
             }
 
